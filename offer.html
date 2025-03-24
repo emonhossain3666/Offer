@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🇺🇸 USA Exclusive Product Testing</title>
+    <style>
+        :root {
+            --primary-blue: #1a2b6d;
+            --accent-red: #e63946;
+            --neutral-white: #f8f9fa;
+            --dark-gray: #2b2d42;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: var(--neutral-white);
+            color: var(--dark-gray);
+            padding-top: 120px;
+            overflow-x: hidden;
+        }
+
+        /* Animated Stars Background */
+        .stars {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle var(--duration) ease-in-out infinite;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, #0d1b45 100%);
+            color: white;
+            padding: 2rem 1rem;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            transform: translateY(0);
+            transition: transform 0.3s ease-in-out;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 200%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent 25%,
+                rgba(255,255,255,0.2) 50%,
+                transparent 75%
+            );
+            animation: flagWave 3s linear infinite;
+        }
+
+        header.hidden {
+            transform: translateY(-100%);
+        }
+
+        header h1 {
+            font-size: 2.8rem;
+            margin: 0 0 0.5rem;
+            font-weight: 700;
+            letter-spacing: -1px;
+            animation: float 3s ease-in-out infinite;
+            position: relative;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin: 0 auto;
+            max-width: 600px;
+            position: relative;
+        }
+
+        #products {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 3rem;
+            padding: 3rem 2rem 4rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .product {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transform-style: preserve-3d;
+            border: 2px solid var(--primary-blue);
+        }
+
+        .product::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.2), transparent);
+            transform: rotate(45deg);
+            animation: shine 3s infinite;
+        }
+
+        .product:hover {
+            transform: translateY(-10px) rotateX(5deg) rotateY(5deg);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+        }
+
+        .product img {
+            width: 100%;
+            height: 250px;
+            object-fit: contain;
+            border-radius: 15px;
+            margin-bottom: 1.5rem;
+            transition: transform 0.4s ease;
+            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.1));
+        }
+
+        .product:hover img {
+            transform: scale(1.1) rotate(-2deg);
+        }
+
+        .product h2 {
+            color: var(--primary-blue);
+            margin: 0 0 1rem;
+            font-size: 1.8rem;
+            font-weight: 700;
+            position: relative;
+            z-index: 1;
+        }
+
+        .product p {
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            color: #4a4a4a;
+            position: relative;
+            z-index: 1;
+        }
+
+        .apply-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--accent-red);
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .apply-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: 0.5s;
+        }
+
+        .apply-btn:hover {
+            background: white;
+            color: var(--accent-red);
+            border-color: var(--accent-red);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(230,57,70,0.3);
+        }
+
+        .apply-btn:hover::before {
+            left: 100%;
+        }
+
+        /* Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-50%) rotate(45deg); }
+            100% { transform: translateX(150%) rotate(45deg); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes flagWave {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(50%); }
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 1; }
+        }
+
+        .product {
+            animation: fadeIn 0.8s ease forwards;
+            opacity: 0;
+        }
+
+        .product:nth-child(1) { animation-delay: 0.2s; }
+        .product:nth-child(2) { animation-delay: 0.4s; }
+        .product:nth-child(3) { animation-delay: 0.6s; }
+
+        /* Fireworks Animation */
+        .firework {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #fff;
+            border-radius: 50%;
+            animation: explode 1s ease-out forwards;
+        }
+
+        @keyframes explode {
+            0% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(20); opacity: 0; }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding-top: 120px;
+            }
+            
+            header h1 {
+                font-size: 2rem;
+            }
+            
+            header p {
+                font-size: 1.1rem;
+            }
+            
+            #products {
+                padding: 2rem 1rem;
+                gap: 2rem;
+            }
+            
+            #products .product:first-child {
+                margin-top: 1rem;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="stars"></div>
+    <header>
+        <h1>🇺🇸 Exclusive USA Product Testing</h1>
+        <p>Claim Your Free Premium Products Today!</p>
+    </header>
+
+    <section id="products">
+       
+        <div class="product">
+            <img src="https://cdn.i-scmp.com/sites/default/files/styles/768x768/public/d8/images/methode/2019/11/01/fca6da0e-fc77-11e9-acf9-cafedce87d15_image_hires_154757.jpg?itok=hSjvc9Mm&v=1572594484" alt="Airpods Pro">
+            <h2>Airpods Pro</h2>
+            <p>Test & Keep AirPods Pro for Free! Experience crystal-clear sound and active noise cancellation. Apply now for a chance to become a product tester and keep yours forever!
+           </p>
+            <a href="https://go4affm.com/c/?p=43958&o=7457" class="apply-btn" target="_blank">Get Testing Unit</a>
+        </div>
+        
+         <div class="product">
+            <img src="https://hips.hearstapps.com/hmg-prod/images/dp-1-copy-64c15c411fce0.jpg?crop=1xw:1xh;center,top&resize=980:*" alt="Dr. Pepper Portable Fridge">
+            <h2>Dr. Pepper Portable Fridge</h2>
+            <p>Test and get your own Dr. Pepper Portable Fridge!Test & Keep a Dr. Pepper Portable Fridge! Keep your drinks ice-cold in style. Apply now for a chance to become a product tester and claim yours for free!
+           </p>
+            <a href="https://go4affm.com/c/?p=43958&o=8028" class="apply-btn" target="_blank">Claim Free Unit</a>
+        </div>
+
+        <div class="product">
+            <img src="https://bynder.sbdinc.com/m/5ef56eca5605695f/Drupal_Medium-DW_Powershift-Header_1.jpg" alt="Air Purifier">
+            <h2>$500 </h2>
+            <p>Claim $500 Worth of DEWALT Tools! Test powerful, high-quality tools built for pros. Apply now for a chance to become a product tester and get yours for free!
+            </p>
+            <a href="https://go4affm.com/c/?p=43958&o=8027" class="apply-btn" target="_blank">Apply Now</a>
+        </div>
+    </section>
+
+    <script>
+        // Create animated stars
+        function createStars() {
+            const starsContainer = document.querySelector('.stars');
+            for (let i = 0; i < 50; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.top = `${Math.random() * 100}%`;
+                star.style.width = `${Math.random() * 3}px`;
+                star.style.height = star.style.width;
+                star.style.animationDelay = `${Math.random() * 2}s`;
+                star.style.setProperty('--duration', `${2 + Math.random() * 3}s`);
+                starsContainer.appendChild(star);
+            }
+        }
+        createStars();
+
+        // Header scroll behavior
+        let lastScroll = 0;
+        const header = document.querySelector('header');
+
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            
+            if (currentScroll > lastScroll && currentScroll > 100) {
+                header.classList.add('hidden');
+            } else {
+                header.classList.remove('hidden');
+            }
+            
+            lastScroll = currentScroll;
+        });
+
+        // Product tilt effect
+        document.querySelectorAll('.product').forEach(product => {
+            product.addEventListener('mousemove', (e) => {
+                const xAxis = (window.innerWidth / 2 - e.pageX) / 15;
+                const yAxis = (window.innerHeight / 2 - e.pageY) / 15;
+                product.style.transform = `translateY(-10px) rotateX(${yAxis}deg) rotateY(${xAxis}deg)`;
+            });
+
+            product.addEventListener('mouseleave', () => {
+                product.style.transform = 'translateY(0) rotateX(0) rotateY(0)';
+            });
+        });
+
+        // Random fireworks
+        setInterval(() => {
+            const firework = document.createElement('div');
+            firework.className = 'firework';
+            firework.style.left = `${10 + Math.random() * 80}%`;
+            firework.style.top = `${10 + Math.random() * 80}%`;
+            firework.style.background = `hsl(${Math.random() * 360}, 100%, 50%)`;
+            document.body.appendChild(firework);
+            setTimeout(() => firework.remove(), 1000);
+        }, 3000);
+    </script>
